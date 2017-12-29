@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cakes JSON</title>
+	<meta charset="utf-8"/>
+</head>
+<body>
+	<select id="dropDownName" onchange="getValue()">
+		
+	</select><br><br>
+	<label>Id:</label><input type="text" name="txtId" id="txtId">
+	<label>Type:</label><input type="text" name="txtType" id="txtType"><br><br>
+	<label>PPU:</label><input type="text" name="txtPPU" id="txtPPU"><br><br>
+	<label>Batters:</label>
+	<ul id="ulBatters"></ul><br>
+	<label>Toppings:</label>
+	<ul id="ulToppings"></ul>
+	<script>
+		var xmlhttp = new XMLHttpRequest();
+		var url = "cakes.json";
+		var myArr;
+		xmlhttp.onreadystatechange = function() {
+		    if (this.readyState == 4 && this.status == 200) {
+		        myArr = JSON.parse(this.responseText);
+		        getInfo(myArr);
+		        var str;
+		        var strLength = myArr.length;
+		        for(var k=0; k<strLength; k++){
+
+		        	 str += "<option>" + myArr[k].name + "</option>";
+		        }
+		        document.getElementById("dropDownName").innerHTML = str;
+		    }
+		};
+
+		function getValue(){
+			getInfo(myArr);
+		}
+
+		function getInfo(arr){
+			
+			var dropDownValue = document.getElementById("dropDownName").value;
+			var i=0;
+			var j=0;
+			/*var batterTypeLen = arr[i].batters.batter[i].type.length;
+			var toppingTypeLen = arr[j].topping[j].type.length;
+			alert("batterTypeLen " + batterTypeLen);//7
+			alert("toppingTypeLen " + toppingTypeLen);//4*/
+			var batterTypeLen;
+			var toppingTypeLen;
+
+
+			if (dropDownValue == "Cake") {
+				document.getElementById("txtId").value = arr[0].id;
+				document.getElementById("txtType").value = arr[0].type;
+				document.getElementById("txtPPU").value = arr[0].ppu;
+				document.getElementById("ulBatters").innerHTML = " ";
+				document.getElementById("ulToppings").innerHTML = " ";				
+				/*for(i=0; i<toppingTypeLen; i++){
+					document.getElementById("ulBatters").innerHTML += "<li>" +arr[0].batters.batter[i].type+ "</li>";
+				}
+				for(j=0; j<batterTypeLen; j++){
+						document.getElementById("ulToppings").innerHTML += "<li>" +arr[0].topping[j].type+ "</li>";
+				}*/
+				batterTypeLen = Object.keys(arr[0].batters.batter).length;
+				toppingTypeLen = Object.keys(arr[0].topping).length;
+
+				// alert("Cake batterTypeLen " + batterTypeLen);
+				// alert("Cake toppingTypeLen " + toppingTypeLen);
+
+				for(i=0; i<batterTypeLen; i++){
+					document.getElementById("ulBatters").innerHTML += "<li>" +arr[0].batters.batter[i].type+ "</li>";
+				}
+				for(j=0; j<toppingTypeLen; j++){
+					document.getElementById("ulToppings").innerHTML += "<li>" +arr[0].topping[j].type+ "</li>";
+				}
+			}
+			if (dropDownValue == "Raised") {
+				document.getElementById("txtId").value = arr[1].id;
+				document.getElementById("txtType").value = arr[1].type;
+				document.getElementById("txtPPU").value = arr[1].ppu;
+				document.getElementById("ulBatters").innerHTML = " ";
+				document.getElementById("ulToppings").innerHTML = " ";
+				/*for(i=0; i<toppingTypeLen; i++){
+					document.getElementById("ulBatters").innerHTML += "<li>" +arr[1].batters.batter[i].type+ "</li>";
+				}
+				for(j=0; j<batterTypeLen; j++){
+					document.getElementById("ulToppings").innerHTML += "<li>" +arr[1].topping[j].type+ "</li>";
+				}*/
+
+				batterTypeLen = Object.keys(arr[1].batters.batter).length;
+				toppingTypeLen = Object.keys(arr[1].topping).length;
+
+				// alert("Raised batterTypeLen " + batterTypeLen);
+				// alert("Raised toppingTypeLen " + toppingTypeLen);
+
+				for(i=0; i<batterTypeLen; i++){
+					document.getElementById("ulBatters").innerHTML += "<li>" +arr[1].batters.batter[i].type+ "</li>";
+				}
+				for(j=0; j<toppingTypeLen; j++){
+					document.getElementById("ulToppings").innerHTML += "<li>" +arr[1].topping[j].type+ "</li>";
+				}
+			}
+			if (dropDownValue == "Old Fashioned") {
+				document.getElementById("txtId").value = arr[2].id;
+				document.getElementById("txtType").value = arr[2].type;
+				document.getElementById("txtPPU").value = arr[2].ppu;
+				document.getElementById("ulBatters").innerHTML = " ";
+				document.getElementById("ulToppings").innerHTML = " ";
+				/*for(i=0; i<toppingTypeLen; i++){
+					document.getElementById("ulBatters").innerHTML += "<li>" +arr[2].batters.batter[i].type+ "</li>";
+				}
+				for(j=0; j<batterTypeLen; j++){
+					document.getElementById("ulToppings").innerHTML += "<li>" +arr[2].topping[j].type+ "</li>";
+				}*/
+				batterTypeLen = Object.keys(arr[2].batters.batter).length;
+				toppingTypeLen = Object.keys(arr[2].topping).length;
+
+				// alert("Old Fashioned batterTypeLen " + batterTypeLen);
+				// alert("Old Fashioned toppingTypeLen " + toppingTypeLen);
+
+				for(i=0; i<batterTypeLen; i++){
+					document.getElementById("ulBatters").innerHTML += "<li>" +arr[2].batters.batter[i].type+ "</li>";
+				}
+				for(j=0; j<toppingTypeLen; j++){
+					document.getElementById("ulToppings").innerHTML += "<li>" +arr[2].topping[j].type+ "</li>";
+				}
+			}	
+		}
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	</script>
+</body>
+</html>
